@@ -1,0 +1,69 @@
+Last Updated 12/01/2010 
+
+Projects:
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+1. Ruby Music UI:
+
+This is a Simple Desktop based text to music Interface designed with ruby and using the Tk Library.
+
+creates a single channel midi file based of the the text you input.. 
+
+To Use:
+
+go to the file directory 
+
+to run >> ruby gui_text2music.rb 
+
+thats it type the text you want and convert.. 
+
+The skin is just a simple jpg so you can redesign it if you like.. Future I'll add a way to choose different skins for the app just for fun and maybe more functionality to the actual App.. 
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+2. The Computer Band:
+
+Ruby Scale and Chord System Engine. 
+
+The goal of this project is to create a simple way for people to create music with ruby code.
+
+1. A Simple Library system for calling Scales and chords.
+
+2. Create a way to choose and build chord progressions and to use default presets.
+
+3. Clean up the code.
+
+4. move the chord library out of the main progression.rb
+
+5 Need to add a way for the user to choose number of channels they like and set each one to one of the 3
+options Melody harmony(chord) or Arp(based off the chords)
+
+
+How to Use the where to Start...
+
+To run >> ruby progression.rb    
+
+This app allows you to
+
+1. Choose the key of the song
+2. Choose a Scale
+3. Title the Track
+
+It generates a 3 channel midi file that can be used in a out side softsynth or other midi readable device. 
+
+
+There are a few midi files in there can be listen too where I was working on creating a basic chord progressions.. 
+
+
+::::::::::::::::::::::::::::::::::::::::
+
+3. Live Ruby Music Coding 
+
+ A sandbox of different Ideas for Live coding Music in Ruby..( working on Better Documentation..)
+
+Highly recommend that you get simple synth if your a mac user..
+
+
+  

@@ -1,0 +1,18 @@
+28c28,33
+<     extend DL::Importable
+---
+>     case RUBY_VERSION.to_f
+>       when 1.8
+>        extend DL::Importable
+>       when 1.9
+>        extend DL::Importer
+>     end
+37c42,47
+<     @device = DL.malloc(DL.sizeof('I'))
+---
+>     case RUBY_VERSION.to_f
+>       when 1.8
+>        @device = DL.malloc(DL.sizeof('I'))
+>       when 1.9
+>        @device = DL::CPtr.new(DL.malloc(DL::SIZEOF_INT),DL::SIZEOF_INT)
+>     end

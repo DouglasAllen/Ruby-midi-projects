@@ -1,0 +1,43 @@
+18a19
+> # Patched to allow MIDI input reading by Gianluca Elia <elgiano@gmail.com>
+39c40,45
+<     extend DL::Importable
+---
+>     case RUBY_VERSION.to_f
+>       when 1.8
+>        extend DL::Importable
+>       when 1.9
+>        extend DL::Importer
+>     end
+45a52,53
+>     
+>     extern "int snd_rawmidi_read(void*, void*, int)"
+49,50c57,65
+<     @output = DL::PtrData.new(nil)
+<     C.snd_rawmidi_open(nil, @output.ref, "virtual", 0)
+---
+>     case RUBY_VERSION.to_f
+>       when 1.8
+>        @output = DL::PtrData.new(nil)
+>        @input = DL::PtrData.new(nil)
+>       when 1.9
+>        @output = DL::CPtr.new(DL::malloc(DL::TYPE_VOID))
+>        @input = DL::CPtr.new(DL::malloc(DL::TYPE_VOID))
+>     end
+>     C.snd_rawmidi_open(@input.ref, @output.ref, "virtual", 0)
+54a70
+>     C.snd_rawmidi_close(@input)
+59c75,76
+<     bytes = args.pack(format).to_ptr
+---
+>     bytes = args.pack(format)
+>     bytes = bytes.to_ptr if RUBY_VERSION.to_f == 1.8
+61a79,86
+>   end
+>   
+>   def read
+>     bytes = [999,999,999].pack("CCC")
+>     bytes = bytes.to_ptr if RUBY_VERSION.to_f == 1.8
+>     C.snd_rawmidi_read(@input,bytes,3)
+>     C.snd_rawmidi_drain(@input)
+>     return bytes

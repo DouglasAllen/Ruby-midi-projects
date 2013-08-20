@@ -1,0 +1,19 @@
+==== About Tuesday ====
+
+Tuesday is a simple media player build in Ruby (Ruby Tuesday :) ) that claims the
+absence of playlists as a feature. In its current state, it is very incomplete.
+
+Tuesday is a personal pet project.
+
+
+==== Running Tuesday ====
+
+Tuesday requires Qt and KDE bindings for Ruby. On Fedora, the pakages are called
+'QtRuby' and 'korundum'. Tuesda requires Qt versioun 4.6 or greater.
+
+With these prereqs, you can run Tuesday by navigating to Tuesday/src and running Main.rb
+eg:
+    cd ~/Tuesday/src
+    ./Main.rb
+
+In the future a startup script and a .desktop file will be provided.
