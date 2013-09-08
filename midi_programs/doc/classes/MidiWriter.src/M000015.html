@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>write (MidiWriter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/mymidi_writter.rb, line 16</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">data</span>)
+    <span class="ruby-identifier">seq</span> = <span class="ruby-constant">Sequence</span>.<span class="ruby-identifier">new</span>()
+    <span class="ruby-identifier">track</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">seq</span>)
+    <span class="ruby-identifier">seq</span>.<span class="ruby-identifier">tracks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">track</span>
+    <span class="ruby-identifier">track</span>.<span class="ruby-identifier">events</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Tempo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Tempo</span>.<span class="ruby-identifier">bpm_to_mpq</span>(<span class="ruby-value">180</span>))
+    <span class="ruby-identifier">track</span>.<span class="ruby-identifier">events</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">MetaEvent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">META_SEQ_NAME</span>, <span class="ruby-value str">'Sequence Name'</span>)
+    <span class="ruby-identifier">track</span> = <span class="ruby-constant">Track</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">seq</span>)
+    <span class="ruby-identifier">seq</span>.<span class="ruby-identifier">tracks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">track</span>
+    <span class="ruby-identifier">track</span>.<span class="ruby-identifier">name</span> = <span class="ruby-value str">'My New Track'</span>
+    <span class="ruby-identifier">track</span>.<span class="ruby-identifier">events</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Controller</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>, <span class="ruby-constant">CC_VOLUME</span>, <span class="ruby-value">127</span>)
+    <span class="ruby-comment cmt">#track.events &lt;&lt; ProgramChange.new(0, @instrument, 0)</span>
+    <span class="ruby-identifier">track</span>.<span class="ruby-identifier">events</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">ProgramChange</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>, <span class="ruby-value">34</span>, <span class="ruby-value">0</span>)
+    <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">event</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">data</span>
+      <span class="ruby-identifier">track</span>.<span class="ruby-identifier">events</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">NoteOnEvent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">event</span>[<span class="ruby-identifier">:note</span>], <span class="ruby-value">127</span>, <span class="ruby-value">0</span>)
+      <span class="ruby-identifier">track</span>.<span class="ruby-identifier">events</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">NoteOffEvent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">event</span>[<span class="ruby-identifier">:note</span>], <span class="ruby-value">127</span>,
+        <span class="ruby-identifier">seq</span>.<span class="ruby-identifier">note_to_delta</span>(<span class="ruby-identifier">event</span>[<span class="ruby-identifier">:duration</span>]))
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-node">&quot;#{@filename}.mid&quot;</span>, <span class="ruby-value str">'wb'</span>) { <span class="ruby-operator">|</span> <span class="ruby-identifier">file</span> <span class="ruby-operator">|</span>
+      <span class="ruby-identifier">seq</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">file</span>)
+    }
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
